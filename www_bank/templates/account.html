@@ -10,7 +10,24 @@
                 <b>Number: {{ account.account_number }}</b>
                 <br>
                 <h3>History</h3>
+                <form method="post" class="form">
+                    {% csrf_token %}
+                    <label for="to_search_label"><h4>Search</h4></label>
+                    <input type="text" name="to_search"
+                           class="form-control" id="to_search"
+                           placeholder="Type number to search"
+                           onkeyup="active_button()">
+                    <div class="commit-btn">
+                        <button type="submit" id="search_button" class="btn btn-success" disabled>SEARCH
+                        </button>
+                    </div>
+                </form>
             </div>
+            <script>
+                function active_button() {
+                    document.getElementById('search_button').disabled = document.getElementById("to_search").value === "";
+                }
+            </script>
             {% if unaccepted %}
                 <div class="card card-body">
                     <h4>Unaccepted:</h4>

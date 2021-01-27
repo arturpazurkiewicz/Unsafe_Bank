@@ -36,10 +36,18 @@ def signup(request):
 def get_account(request, account_id):
     user = request.user
     account = Account.objects.get(id=account_id, user_id=user)
-    history = TransferHistory.objects.filter(account_id=account,
-                                             is_accepted=True)
-    unaccepted = TransferHistory.objects.filter(account_id=account,
-                                                is_accepted=False)
+
+    if request.method == 'POST' and request.POST.get('to_search',None) is not None:
+        search = request.POST.get('to_search',None)
+    #     SQL injection, type ') OR true--
+        print(f"SELECT * FROM www_bank_transferhistory WHERE account_id_id={account_id} AND is_accepted=true AND  (from_account_number LIKE '{search}' OR to_account_number LIKE '{search}' );")
+        history = TransferHistory.objects.raw(f"SELECT * FROM www_bank_transferhistory WHERE account_id_id={account_id} AND is_accepted=true AND  (from_account_number LIKE '{search}' OR to_account_number LIKE '{search}' );")
+        unaccepted = TransferHistory.objects.raw(f"SELECT * FROM www_bank_transferhistory WHERE account_id_id={account_id} AND is_accepted=false AND  (from_account_number LIKE '{search}' OR to_account_number LIKE '{search}' );")
+    else:
+        history = TransferHistory.objects.filter(account_id=account,
+                                                 is_accepted=True)
+        unaccepted = TransferHistory.objects.filter(account_id=account,
+                                                    is_accepted=False)
 
     return render(request, 'account.html',
                   {'account': account, 'history': history,

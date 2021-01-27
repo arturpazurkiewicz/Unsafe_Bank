@@ -1,0 +1,30 @@
+{% extends 'transaction.html' %}
+{% block content2 %}
+    <div class="card card-body">
+        <div class="buttons">
+            <form method="post" class="form" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div style="text-align: center;">
+                    <span>
+                         <input type="submit" class="btn btn-danger"
+                                style="background-color: green" name="is_ok"
+                                id="is_ok" value="Accept">
+                     </span>
+                </div>
+            </form>
+            <a href="/account/{{ transaction.account_id_id }}/" class="links">Back</a>
+            <form method="post" class="form" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div style="text-align: center;">
+                    <span>
+                         <input type="submit" class="btn btn-danger"
+                                name="is_ok"
+                                id="is_ok" value="Delete">
+                     </span>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+{% endblock %}

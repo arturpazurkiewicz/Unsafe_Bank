@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/css.css' %}">
+    <meta charset="UTF-8">
+    <title>Fake Bank</title>
+</head>
+
+<body>
+{% include 'navbar.html' %}
+<div class="container-fluid">
+    {% block content %}
+
+
+
+
+    {% endblock %}
+    {% if error %}
+        <script>
+            alert('{{ error }}');
+        </script>
+    {% endif %}
+</div>
+</body>
+</html>

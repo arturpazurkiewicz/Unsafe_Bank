@@ -1,0 +1,43 @@
+{% extends 'main.html' %}
+{% block content %}
+    <br>
+    <div class="row">
+        <div class="col-md">
+            <div class="card card-body">
+                <h2>Transaction</h2>
+            </div>
+            <div class="card card-body">
+                <table class="table">
+                    <tr>
+                        <th>From</th>
+                        <th> {{ transaction.from_account_number }}</th>
+                    </tr>
+                    <tr>
+                        <th>To</th>
+                        <th id="account_number" style="color: red">{{ transaction.to_account_number }}</th>
+                    <tr>
+                        <th>Value</th>
+                        <th>{{ transaction.value }}</th>
+
+                    </tr>
+                    <tr>
+                        <th>Balance</th>
+                        <th>{{ transaction.account_balance }}</th>
+                    </tr>
+                    <tr>
+                        <th>Date</th>
+                        <th>{{ transaction.date }}</th>
+                    </tr>
+                    <tr>
+                        <th>Description</th>
+                        <th>{{ transaction.description }}</th>
+                    </tr>
+                </table>
+            </div>
+            {% block content2 %}
+
+            {% endblock %}
+        </div>
+
+    </div>
+{% endblock content %}

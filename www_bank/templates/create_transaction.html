@@ -1,0 +1,46 @@
+{% extends 'main.html' %}
+{% block content %}
+    <br>
+
+    <div class="row">
+        <div class="col-md">
+            <div class="card card-body">
+                <h2>Create transaction</h2>
+            </div>
+            <div class="card card-body">
+                <div id="login-form" class="form " action="" method="post">
+                    {% if form.non_field_errors %}
+                        {% for error in form.non_field_errors %}
+                            {{ error }}
+                        {% endfor %}
+                    {% endif %}
+                    <div class="form">
+                        <form method="post">
+                            {% csrf_token %}
+                            {% for field in form %}
+                                <div class="d-flex justify-content-center">
+                                    <p>
+                                        {{ field }}
+                                    </p>
+                                </div>
+                                <div class="d-flex justify-content-center">
+                                    {% for error in field.errors %}
+                                        <p class="text-center text-danger">{{ error }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endfor %}
+                            <div class="center-block text-center">
+                            </div>
+                            <div class="center-block text-center">
+
+                                <button class="btn btn-info btn-md "
+                                        type="submit" value="login"
+                                        id="register_button">Create transaction
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+{% endblock content %}

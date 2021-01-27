@@ -1,0 +1,38 @@
+{% extends 'main.html' %}
+{% block content %}
+    <br>
+    <div class="row">
+        <div class="col-md">
+            <div class="card card-body">
+                <h2>Accounts</h2>
+            </div>
+            <div class="card card-body">
+                <table class="table">
+                    <tr>
+                        <th>Name</th>
+                        <th>Balance</th>
+                        <th>Number</th>
+                    </tr>
+
+                    {% for i in accounts %}
+                        {#                        <div class="card-body ">#}
+                        <tr>
+                            <td><a class="links" href="account/{{ i.id }}/"
+                                   class="row-link">{{ i.name }}</a></td>
+                            <td>{{ i.account_balance }}</td>
+                            <td>{{ i.account_number }}</td>
+                        </tr>
+                        {#                        </div>#}
+                    {% endfor %}
+
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+{% endblock content %}

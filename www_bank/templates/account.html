@@ -1,0 +1,72 @@
+{% extends 'main.html' %}
+{% block content %}
+    <br>
+
+    <div class="row">
+        <div class="col-md account-col">
+            <div class="card card-body" style="font-weight: lighter">
+                <b>Account name: {{ account.name }}</b>
+                <b>Balance: {{ account.account_balance }}</b>
+                <b>Number: {{ account.account_number }}</b>
+                <br>
+                <h3>History</h3>
+            </div>
+            {% if unaccepted %}
+                <div class="card card-body">
+                    <h4>Unaccepted:</h4>
+                    <table class="table" style="color: red">
+                        <tr>
+                            <th>More</th>
+                            <th>From</th>
+                            <th>To</th>
+                            <th>Value</th>
+                            <th>Balance</th>
+                            <th>Date</th>
+                            <th>Description</th>
+                        </tr>
+                        {% for i in unaccepted %}
+                            <tr>
+                                <td><a href="/transaction/{{ i.id }}/"
+                                       class="row-link links">More</a></td>
+                                <td class="account_number_class">{{ i.from_account_number }}</td>
+                                <td class="account_number_class">{{ i.to_account_number }}</td>
+                                <td>{{ i.value }}</td>
+                                <td>{{ i.account_balance }}</td>
+                                <td>{{ i.date }}</td>
+                                <td>{{ i.description }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            {% endif %}
+            <div class="card card-body">
+                <h4>Accepted:</h4>
+                <table class="table">
+                    <tr>
+                        <th>More</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Value</th>
+                        <th>Balance</th>
+                        <th>Date</th>
+                        <th>Description</th>
+                    </tr>
+
+                    {% for i in history %}
+                        <tr>
+                            <td><a href="/transaction/{{ i.id }}/"
+                                   class="row-link links">More</a></td>
+                            <td class="account_number_class">{{ i.from_account_number }}</td>
+                            <td class="account_number_class">{{ i.to_account_number }}</td>
+                            <td>{{ i.value }}</td>
+                            <td>{{ i.account_balance }}</td>
+                            <td>{{ i.date }}</td>
+                            <td>{{ i.description }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

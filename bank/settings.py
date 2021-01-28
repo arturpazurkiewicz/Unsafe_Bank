@@ -25,7 +25,7 @@ SECRET_KEY = '#qombty=6s*+==0$x^9&rj_$v15$xme+cf_mhy%&@k1)q4p=ec'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['mojwspanialybank.pl','127.0.0.1']
 
 
 # Application definition

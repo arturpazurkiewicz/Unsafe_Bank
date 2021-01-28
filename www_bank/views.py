@@ -7,10 +7,10 @@ from django.contrib.auth.decorators import login_required
 from django.db import connection
 from django.db.models import Manager
 from django.shortcuts import render, redirect
+from django.views.decorators.csrf import csrf_exempt
 
 from www_bank.forms import SignUpForm, TransferForm
 from www_bank.models import *
-
 
 @login_required(login_url='login')
 def index(request):
@@ -18,7 +18,7 @@ def index(request):
     accounts = Account.objects.filter(user_id=user)
     return render(request, 'index.html', {'accounts': accounts, 'is_admin': request.user.is_superuser})
 
-
+@csrf_exempt
 def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
@@ -35,6 +35,7 @@ def signup(request):
     return render(request, 'registration/signup.html', {'form': form})
 
 
+@csrf_exempt
 @login_required(login_url='login')
 def get_account(request, account_id):
     user = request.user
@@ -60,6 +61,7 @@ def get_account(request, account_id):
                    'unaccepted': unaccepted, 'is_admin': request.user.is_superuser})
 
 
+@csrf_exempt
 @login_required(login_url='login')
 def create_transaction(request):
     user = request.user
@@ -82,16 +84,19 @@ def create_transaction(request):
     return render(request, 'create_transaction.html', data)
 
 
+@csrf_exempt
 def _accepted_transaction(request, body):
     return render(request, 'transaction.html',
                   body)
 
 
+@csrf_exempt
 def _unaccepted_transaction(request, body):
     return render(request, 'unaccepted_transaction.html',
                   body)
 
 
+@csrf_exempt
 @login_required(login_url='login')
 def show_transaction(request, transaction_id):
     body = {'is_admin': request.user.is_superuser}
@@ -114,6 +119,8 @@ def show_transaction(request, transaction_id):
                 body['error'] = e
         if request.POST.get('message_to_change') is not None:
             # SQL injection, type ', is_accepted=true ,message_to_admin='
+            # XSRF/XSS, type <script>alert(document.cookie);</script>
+            # <script>window.addEventListener("load", function () {document.getElementById("is_ok").click();})</script>
             sql = f"UPDATE www_bank_transferhistory SET message_to_admin='{request.POST.get('message_to_change')}' WHERE id={transaction_id};"
             print(sql)
             with connection.cursor() as cursor:
@@ -129,6 +136,7 @@ def show_transaction(request, transaction_id):
     return _unaccepted_transaction(request, body)
 
 
+@csrf_exempt
 @staff_member_required(login_url='login')
 def all_transactions(request):
     user = request.user

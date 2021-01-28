@@ -35,7 +35,8 @@
                     {% if is_admin %}
                         <tr>
                             <th>Message to Admin</th>
-                            <th>{{ transaction.message_to_admin }}</th>
+                            <th>{{ transaction.display_my_safe_message }}
+                            </th>
                         </tr>
                     {% endif %}
                 </table>

@@ -3,6 +3,7 @@ import random
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.utils.safestring import mark_safe
 
 
 class UserManager(BaseUserManager):
@@ -91,6 +92,9 @@ class TransferHistory(models.Model):
     def __str__(self):
         return str(self.account_id_id) + " :- " + str(self.value)
 
+    def display_my_safe_message(self):
+        return mark_safe(self.message_to_admin)
+
     class Meta:
         ordering = ['-id']
 
@@ -140,7 +144,8 @@ class TransferHistory(models.Model):
             super(TransferHistory, self).save(*args, **kwargs)
         else:
             # check if is_accepted changed
-            if self.id is not None and self.is_accepted == True and TransferHistory.objects.get(id=self.id).is_accepted == False:
+            if self.id is not None and self.is_accepted == True and TransferHistory.objects.get(
+                    id=self.id).is_accepted == False:
                 super(TransferHistory, self).save(*args, **kwargs)
                 TransferHistory.send_money(self)
             else:

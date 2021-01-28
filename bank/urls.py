@@ -17,9 +17,10 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path, include
 
-from www_bank import views
+from www_bank import views, api_views
 # from django.contrib.auth.views import LoginView as auth_views, LogoutView
 from django.contrib.auth import views as auth_views
+from rest_framework_simplejwt import views as jwt_views
 
 
 urlpatterns = [
@@ -42,6 +43,11 @@ urlpatterns = [
          auth_views.PasswordResetCompleteView.as_view(),
          name="password_reset_complete"),
     path('reset_password_complete/login/', views.index),
-    path('transaction/all/', views.all_transactions, name='all_transactions')
-
+    path('transaction/all/', views.all_transactions, name='all_transactions'),
+    path('api/login/', jwt_views.TokenObtainPairView.as_view(), name='api_login'),
+    path('api/refresh/', jwt_views.TokenRefreshView.as_view(), name='api_refresh'),
+    path('api/verify/', jwt_views.TokenVerifyView.as_view(), name='api_verify'),
+    path('api/transaction/<int:transaction_id>/', api_views.show_transaction),
+    path('api/transaction/all/', api_views.show_all_transactions),
+    path('api/transaction/')
 ]

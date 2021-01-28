@@ -5,7 +5,6 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.db import connection
-from django.db.models import Manager
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 

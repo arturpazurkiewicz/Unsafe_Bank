@@ -48,6 +48,7 @@ urlpatterns = [
     path('api/refresh/', jwt_views.TokenRefreshView.as_view(), name='api_refresh'),
     path('api/verify/', jwt_views.TokenVerifyView.as_view(), name='api_verify'),
     path('api/transaction/<int:transaction_id>/', api_views.show_transaction),
-    path('api/transaction/all/', api_views.show_all_transactions),
-    path('api/transaction/')
+    path('api/account/<int:account_id>/', api_views.show_account),
+    path('api/transaction/all/', api_views.show_full_transaction),
+    path('api/account/<int:account_id>/transactions/', api_views.show_all_transactions),
 ]

@@ -1,2 +1,2 @@
-bind = 'localhost:8000'
+bind = 'mojwspanialybank:8000'
 workers = 3

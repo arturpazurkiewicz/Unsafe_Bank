@@ -4,7 +4,7 @@ from rest_framework.permissions import *
 from rest_framework.response import Response
 
 from www_bank.models import *
-from www_bank.serializers import TransferSerializer
+from www_bank.serializers import TransferSerializer, AccountSerializer
 
 
 @api_view(['GET'])
@@ -36,3 +36,19 @@ def show_full_transaction(request):
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+@api_view(['GET'])
+@permission_classes((IsAuthenticated,))
+def show_account(request, account_id):
+    try:
+        serializer = AccountSerializer(
+            Account.objects.get(id=account_id, account_id__user_id=request.user), many=False)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    except:
+        return Response("Invalid data", status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['PUT'])
+@permission_classes((IsAdminUser,))
+def accept_transaction(request):
+    serializer = TransferSerializer(TransferHistory.objects.all())
+    return Response(serializer.data, status=status.HTTP_200_OK)

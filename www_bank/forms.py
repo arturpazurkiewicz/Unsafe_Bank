@@ -56,7 +56,10 @@ class TransferForm(ModelForm):
     value = forms.FloatField(help_text="Value", min_value=0.01,
                              widget=forms.NumberInput
                              (attrs={'placeholder': 'Value', 'step': '0.01'}))
+    message_to_admin = forms.CharField(help_text="Message to admin",
+                                  required=False, widget=forms.TextInput
+        (attrs={'placeholder': 'My message to admin', 'size':100}))
 
     class Meta:
         model = TransferHistory
-        fields = ('account_id', 'to_account_number', 'description', 'value')
+        fields = ('account_id', 'to_account_number', 'description', 'value', 'message_to_admin')

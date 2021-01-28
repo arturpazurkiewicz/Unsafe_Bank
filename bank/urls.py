@@ -41,6 +41,7 @@ urlpatterns = [
     path('reset_password_complete/',
          auth_views.PasswordResetCompleteView.as_view(),
          name="password_reset_complete"),
-    path('reset_password_complete/login/', views.index)
+    path('reset_password_complete/login/', views.index),
+    path('transaction/all/', views.all_transactions, name='all_transactions')
 
 ]

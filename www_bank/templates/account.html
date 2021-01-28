@@ -5,11 +5,13 @@
     <div class="row">
         <div class="col-md account-col">
             <div class="card card-body" style="font-weight: lighter">
-                <b>Account name: {{ account.name }}</b>
-                <b>Balance: {{ account.account_balance }}</b>
-                <b>Number: {{ account.account_number }}</b>
-                <br>
-                <h3>History</h3>
+                {% if account %}
+                    <h3>Account info</h3>
+                    <b>Account name: {{ account.name }}</b>
+                    <b>Balance: {{ account.account_balance }}</b>
+                    <b>Number: {{ account.account_number }}</b>
+                    <br>
+                {% endif %}
                 <form method="post" class="form">
                     {% csrf_token %}
                     <label for="to_search_label"><h4>Search</h4></label>
@@ -22,6 +24,8 @@
                         </button>
                     </div>
                 </form>
+                <br>
+                <h3>History</h3>
             </div>
             <script>
                 function active_button() {

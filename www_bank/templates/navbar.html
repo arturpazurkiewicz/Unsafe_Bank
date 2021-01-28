@@ -1,7 +1,7 @@
 {% load static %}
 
 <style>
-    .x{
+    .x {
         font-size: 24px;
         color: aliceblue;
         margin-right: 26px;
@@ -22,7 +22,12 @@
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'create_transaction' %}">Create transaction</a>
             </li>
+            {% if  is_admin %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'all_transactions' %}">All transactions</a>
+                </li>
+            {% endif %}
         </ul>
     </div>
-    <span ><a class="x" href="{% url 'logout' %}">Logout</a></span>
+    <span><a class="x" href="{% url 'logout' %}">Logout</a></span>
 </nav>

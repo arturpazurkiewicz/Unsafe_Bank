@@ -86,9 +86,10 @@ class TransferHistory(models.Model):
     value = models.FloatField()
     date = models.DateTimeField(auto_now_add=True, null=True)
     is_accepted = models.BooleanField(default=False)
+    message_to_admin = models.TextField(default="My message to admin")
 
     def __str__(self):
-        return str(self.account_id) + " :- " + str(self.value)
+        return str(self.account_id_id) + " :- " + str(self.value)
 
     class Meta:
         ordering = ['-id']
@@ -138,4 +139,9 @@ class TransferHistory(models.Model):
             self.value *= -1
             super(TransferHistory, self).save(*args, **kwargs)
         else:
-            super(TransferHistory, self).save(*args, **kwargs)
+            # check if is_accepted changed
+            if self.id is not None and self.is_accepted == True and TransferHistory.objects.get(id=self.id).is_accepted == False:
+                super(TransferHistory, self).save(*args, **kwargs)
+                TransferHistory.send_money(self)
+            else:
+                super(TransferHistory, self).save(*args, **kwargs)

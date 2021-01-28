@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django import forms
 
 # Register your models here.
 from www_bank.models import *
@@ -7,7 +8,6 @@ from django.utils.translation import ugettext_lazy as _
 
 
 admin.site.register(Account)
-admin.site.register(TransferHistory)
 
 
 @admin.register(User)
@@ -30,3 +30,13 @@ class UserAdmin(DjangoUserAdmin):
     list_display = ('username','email', 'first_name', 'last_name', 'is_staff')
     search_fields = ('username','email' ,'first_name', 'last_name')
     ordering = ('username',)
+
+
+@admin.register(TransferHistory)
+class TransferHistoryAdmin(admin.ModelAdmin):
+    list_display = ('from_account_number','is_accepted','to_account_number','date','value', 'description')
+
+
+    def transfer_actions(self, obj):
+        # TODO
+        pass

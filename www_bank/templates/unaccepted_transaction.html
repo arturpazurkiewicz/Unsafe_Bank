@@ -1,17 +1,34 @@
 {% extends 'transaction.html' %}
 {% block content2 %}
+    {% if not is_admin %}
+        <div class="card card-body">
+            <form method="post" class="form">
+                {% csrf_token %}
+                <label for="message_to_change"><h4>Change message</h4></label>
+                <input type="text" name="message_to_change"
+                       class="form-control" id="message_to_change"
+                       placeholder={{ transaction.message_to_admin }}>
+                <div class="commit-btn">
+                    <button type="submit" id="search_button" class="btn btn-success">Change
+                    </button>
+                </div>
+            </form>
+        </div>
+    {% endif %}
     <div class="card card-body">
         <div class="buttons">
-            <form method="post" class="form" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div style="text-align: center;">
+            {% if is_admin %}
+                <form method="post" class="form" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div style="text-align: center;">
                     <span>
                          <input type="submit" class="btn btn-danger"
                                 style="background-color: green" name="is_ok"
                                 id="is_ok" value="Accept">
                      </span>
-                </div>
-            </form>
+                    </div>
+                </form>
+            {% endif %}
             <a href="/account/{{ transaction.account_id_id }}/" class="links">Back</a>
             <form method="post" class="form" enctype="multipart/form-data">
                 {% csrf_token %}

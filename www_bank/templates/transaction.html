@@ -32,6 +32,12 @@
                         <th>Description</th>
                         <th>{{ transaction.description }}</th>
                     </tr>
+                    {% if is_admin %}
+                        <tr>
+                            <th>Message to Admin</th>
+                            <th>{{ transaction.message_to_admin }}</th>
+                        </tr>
+                    {% endif %}
                 </table>
             </div>
             {% block content2 %}

@@ -21,6 +21,8 @@ from www_bank import views, api_views
 # from django.contrib.auth.views import LoginView as auth_views, LogoutView
 from django.contrib.auth import views as auth_views
 from rest_framework_simplejwt import views as jwt_views
+from django.conf.urls.static import static
+from bank import settings
 
 
 urlpatterns = [
@@ -53,5 +55,6 @@ urlpatterns = [
     path('api/account/<int:account_id>/', api_views.show_account),
     path('api/transaction/all/', api_views.show_full_transaction),
     path('api/account/<int:account_id>/transactions/', api_views.show_all_transactions),
-    path('api/register/', api_views.register)
-]
+    path('api/register/', api_views.register) 
+
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
